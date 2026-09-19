@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>나의 시작 페이지</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f1ea;
+    --surface:#ffffff;
+    --surface-2:#faf8f3;
+    --line:#e2ddd1;
+    --ink:#22201c;
+    --ink-2:#5f5a50;
+    --ink-3:#8d877a;
+    --accent:#c4552b;
+    --accent-soft:#f5e3d8;
+    --sky:#2e6f8e;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#17161a;
+      --surface:#211f24;
+      --surface-2:#26242b;
+      --line:#38353e;
+      --ink:#efece6;
+      --ink-2:#b4afa6;
+      --ink-3:#847f78;
+      --accent:#e8845c;
+      --accent-soft:#3a2a23;
+      --sky:#7cb6d4;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#17161a; --surface:#211f24; --surface-2:#26242b; --line:#38353e;
+    --ink:#efece6; --ink-2:#b4afa6; --ink-3:#847f78;
+    --accent:#e8845c; --accent-soft:#3a2a23; --sky:#7cb6d4;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,-apple-system,sans-serif;
+    line-height:1.6;
+    font-size:16px;
+  }
+  .wrap{max-width:1040px;margin:0 auto;padding:28px 20px 60px}
+
+  /* ── header ── */
+  header{margin-bottom:26px}
+  .kicker{font-size:.78rem;letter-spacing:.18em;color:var(--ink-3);text-transform:uppercase;margin:0 0 6px}
+  .greet{font-size:1.9rem;font-weight:900;margin:0;letter-spacing:-.02em}
+  .date-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;margin-top:8px;color:var(--ink-2);font-size:.92rem}
+  #clock{font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink)}
+
+  /* ── layout ── */
+  .grid{display:grid;grid-template-columns:1fr;gap:18px}
+  @media (min-width:860px){
+    .grid{grid-template-columns:1.05fr .95fr;align-items:start}
+    .span2{grid-column:1 / -1}
+  }
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:22px;
+  }
+  .card h2{
+    margin:0 0 16px;font-size:.8rem;font-weight:700;letter-spacing:.14em;
+    color:var(--ink-3);text-transform:uppercase;
+    display:flex;align-items:center;gap:8px;
+  }
+
+  /* ── weather ── */
+  .temp-main{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap}
+  .temp-big{font-size:3.6rem;font-weight:900;line-height:1;letter-spacing:-.04em}
+  .temp-meta{padding-top:6px}
+  .cond{font-weight:700;font-size:1.05rem;margin:0}
+  .loc{margin:2px 0 0;color:var(--ink-3);font-size:.88rem}
+  .hilo{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+  .pill{
+    background:var(--surface-2);border:1px solid var(--line);
+    border-radius:12px;padding:9px 14px;font-size:.88rem;
+  }
+  .pill b{font-size:1.05rem;font-variant-numeric:tabular-nums}
+  .note{
+    margin-top:14px;padding:12px 14px;border-radius:12px;
+    background:var(--accent-soft);color:var(--ink);font-size:.88rem;
+    border:1px solid transparent;
+  }
+
+  /* ── outfit ── */
+  .band{
+    display:inline-block;background:var(--accent);color:#fff;
+    font-weight:700;font-size:.82rem;padding:5px 12px;border-radius:999px;
+  }
+  .picked{font-size:2.4rem;font-weight:900;line-height:1.1;margin:14px 0 4px;letter-spacing:-.03em}
+  .items{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0;padding:0;list-style:none}
+  .items li{
+    background:var(--surface-2);border:1px solid var(--line);
+    border-radius:10px;padding:8px 13px;font-size:.93rem;font-weight:500;
+  }
+  .tip{margin:16px 0 0;font-size:.88rem;color:var(--ink-2)}
+
+  .ctrl{margin-top:20px;padding-top:18px;border-top:1px dashed var(--line)}
+  .ctrl-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+  .ctrl-label{font-size:.82rem;color:var(--ink-3);font-weight:700;letter-spacing:.08em}
+  .ctrl-val{font-weight:900;font-size:1.1rem;font-variant-numeric:tabular-nums}
+  input[type=range]{width:100%;accent-color:var(--accent);height:26px}
+  .quickbtns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  .qb{
+    font:inherit;font-size:.85rem;font-weight:700;cursor:pointer;
+    background:var(--surface-2);color:var(--ink);
+    border:1px solid var(--line);border-radius:999px;padding:7px 14px;
+  }
+  .qb:hover{border-color:var(--accent);color:var(--accent)}
+  .qb[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+
+  /* ── news ── */
+  .news{list-style:none;margin:0;padding:0}
+  .news li{border-top:1px solid var(--line)}
+  .news li:first-child{border-top:none}
+  .news a{
+    display:block;padding:13px 0;color:var(--ink);text-decoration:none;
+  }
+  .news a:hover .nt{color:var(--accent)}
+  .nt{font-weight:500;font-size:.98rem;line-height:1.45;transition:color .15s}
+  .ns{display:block;margin-top:4px;font-size:.78rem;color:var(--ink-3)}
+  .tagline{
+    display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.06em;
+    color:var(--sky);border:1px solid currentColor;border-radius:6px;
+    padding:1px 6px;margin-right:7px;vertical-align:1px;
+  }
+
+  /* ── links ── */
+  .links{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px}
+  .links a{
+    display:block;text-align:center;text-decoration:none;
+    background:var(--surface-2);border:1px solid var(--line);border-radius:13px;
+    padding:14px 8px;color:var(--ink);font-size:.86rem;font-weight:500;
+  }
+  .links a:hover{border-color:var(--accent);color:var(--accent)}
+  .links .ico{display:block;font-size:1.3rem;margin-bottom:5px}
+
+  /* ── ref table ── */
+  details{margin-top:18px}
+  summary{cursor:pointer;font-size:.86rem;color:var(--ink-2);font-weight:700}
+  .tablewrap{overflow-x:auto;margin-top:12px}
+  table{border-collapse:collapse;width:100%;min-width:430px;font-size:.86rem}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--ink-3);font-weight:700;white-space:nowrap}
+  td:first-child{white-space:nowrap;font-weight:700;font-variant-numeric:tabular-nums}
+  tr.on td{background:var(--accent-soft)}
+
+  footer{margin-top:28px;font-size:.78rem;color:var(--ink-3);text-align:center;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="kicker">My Start Page</p>
+    <h1 class="greet" id="greet">좋은 하루 보내세요</h1>
+    <div class="date-row">
+      <span id="today">2026년 9월 20일 일요일</span>
+      <span id="clock">--:--:--</span>
+      <span>· 경기 부천시</span>
+    </div>
+  </header>
+
+  <div class="grid">
+
+    <!-- 날씨 -->
+    <section class="card">
+      <h2>오늘의 날씨</h2>
+      <div class="temp-main">
+        <div class="temp-big">29°</div>
+        <div class="temp-meta">
+          <p class="cond">☀️ 대체로 맑음</p>
+          <p class="loc">부천 · 서울·인천 예보 기준</p>
+        </div>
+      </div>
+      <div class="hilo">
+        <span class="pill">아침 최저 <b>18°</b></span>
+        <span class="pill">낮 최고 <b>29°</b></span>
+        <span class="pill">일교차 <b>11°</b></span>
+      </div>
+      <p class="note">일교차가 10~15도로 크게 벌어집니다. 낮에는 덥지만 아침저녁은 선선하니 겉옷을 챙기세요. 자외선이 강하고 대기가 건조해집니다.</p>
+    </section>
+
+    <!-- 옷차림 -->
+    <section class="card">
+      <h2>오늘의 옷차림</h2>
+      <span class="band" id="band">낮 기준</span>
+      <p class="picked" id="picked">28도 이상</p>
+      <ul class="items" id="items"></ul>
+      <p class="tip" id="tip"></p>
+
+      <div class="ctrl">
+        <div class="ctrl-top">
+          <span class="ctrl-label">기온 직접 조절</span>
+          <span class="ctrl-val" id="tval">29°C</span>
+        </div>
+        <input type="range" id="slider" min="-15" max="38" step="1" value="29" aria-label="기온 선택">
+        <div class="quickbtns">
+          <button class="qb" id="btnMorning" type="button" aria-pressed="false">아침 18°</button>
+          <button class="qb" id="btnDay" type="button" aria-pressed="true">낮 29°</button>
+        </div>
+      </div>
+
+      <details>
+        <summary>기온별 옷차림 기준표 보기</summary>
+        <div class="tablewrap">
+          <table id="reftable">
+            <thead><tr><th>기온</th><th>추천 옷</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </details>
+    </section>
+
+    <!-- 뉴스 -->
+    <section class="card span2">
+      <h2>오늘의 주요 뉴스</h2>
+      <ul class="news">
+        <li><a href="https://www.mt.co.kr/politics/2026/09/14/2026091411105295243" target="_blank" rel="noopener">
+          <span class="nt"><span class="tagline">정치</span>김승원 법무부 장관 후보자, 지명 20일 만에 자진 사퇴</span>
+          <span class="ns">여야 공방 속 "깊은 고민 끝에 결심" — 용혜인 후보자에 이은 두 번째 낙마</span></a></li>
+        <li><a href="https://www.khan.co.kr/" target="_blank" rel="noopener">
+          <span class="nt"><span class="tagline">정치</span>이재명 대통령 "청년정책 총괄 전담 조직 신설 고민 중"</span>
+          <span class="ns">청년의 날 기념식에서 자산 형성·결혼·주거 문제 언급</span></a></li>
+        <li><a href="https://www.mediafine.co.kr/news/articleView.html?idxno=90208" target="_blank" rel="noopener">
+          <span class="nt"><span class="tagline">날씨</span>전국 대체로 맑음, 낮 최고 30도… 큰 일교차 주의</span>
+          <span class="ns">아침 14~21도, 낮 24~30도. 수도권·충청 대기 건조로 화재 주의</span></a></li>
+        <li><a href="https://m.news.nate.com/view/20260920n00003" target="_blank" rel="noopener">
+          <span class="nt"><span class="tagline">사회</span>성수동 카페 '노차이나존' 논란… 영업의 자유 vs 차별</span>
+          <span class="ns">온라인에서 찬반 논쟁 확산</span></a></li>
+        <li><a href="https://www.khan.co.kr/" target="_blank" rel="noopener">
+          <span class="nt"><span class="tagline">경제</span>부동산 대책 후폭풍·중동발 경제 위기, 이번 주 주요 이슈</span>
+          <span class="ns">AI 속도조절론과 2026 아시안게임도 주요 기획 이슈로</span></a></li>
+      </ul>
+    </section>
+
+    <!-- 바로가기 -->
+    <section class="card span2">
+      <h2>바로가기</h2>
+      <div class="links">
+        <a href="https://www.weather.go.kr/w/index.do" target="_blank" rel="noopener"><span class="ico">🌤️</span>기상청</a>
+        <a href="https://weather.naver.com/" target="_blank" rel="noopener"><span class="ico">📍</span>네이버 날씨</a>
+        <a href="https://www.airkorea.or.kr/" target="_blank" rel="noopener"><span class="ico">😷</span>에어코리아</a>
+        <a href="https://news.naver.com/" target="_blank" rel="noopener"><span class="ico">📰</span>네이버 뉴스</a>
+        <a href="https://www.yna.co.kr/" target="_blank" rel="noopener"><span class="ico">🗞️</span>연합뉴스</a>
+        <a href="https://mail.naver.com/" target="_blank" rel="noopener"><span class="ico">✉️</span>메일</a>
+        <a href="https://calendar.google.com/" target="_blank" rel="noopener"><span class="ico">📅</span>캘린더</a>
+        <a href="https://map.naver.com/" target="_blank" rel="noopener"><span class="ico">🗺️</span>지도</a>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    날씨는 2026년 9월 20일 기상청 발표 예보 기준이며, 이 페이지에 저장된 값입니다.<br>
+    실시간 기온은 위 바로가기에서 확인한 뒤 슬라이더로 맞춰 보세요.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var RULES = [
+    {min:28,  max:99,  label:"28도 이상",  items:["민소매","반팔","반바지","짧은 치마","린넨 옷"],       tip:"덥습니다. 통풍 잘 되는 얇은 소재로, 자외선 차단도 잊지 마세요."},
+    {min:23,  max:27,  label:"27~23도",   items:["반팔","얇은 셔츠","반바지","면바지"],                tip:"활동하기 좋은 날씨예요. 얇은 겉옷 하나면 충분합니다."},
+    {min:20,  max:22,  label:"22~20도",   items:["블라우스","긴팔 티","면바지","슬랙스"],              tip:"쾌적하지만 해가 지면 선선해집니다."},
+    {min:17,  max:19,  label:"19~17도",   items:["얇은 가디건","얇은 니트","맨투맨","후드","긴 바지"], tip:"아침저녁으로 쌀쌀해요. 겉옷을 챙기는 게 좋습니다."},
+    {min:12,  max:16,  label:"16~12도",   items:["자켓","가디건","청자켓","니트","스타킹","청바지"],   tip:"본격적인 겉옷의 계절입니다."},
+    {min:9,   max:11,  label:"11~9도",    items:["트렌치 코트","야상","점퍼","스타킹","기모바지"],     tip:"바람이 차갑습니다. 안쪽에 한 겹 더 입으세요."},
+    {min:5,   max:8,   label:"8~5도",     items:["울 코트","히트텍","가죽 옷","기모"],                 tip:"추워요. 보온 내의를 받쳐 입으면 훨씬 낫습니다."},
+    {min:-99, max:4,   label:"4도 이하",  items:["패딩","두꺼운 코트","누빔 옷","기모","목도리"],      tip:"강추위입니다. 목·손·귀까지 꼼꼼히 감싸세요."}
+  ];
+
+  var MORNING = 18, DAY = 29;
+
+  var $ = function(id){ return document.getElementById(id); };
+  var picked = $("picked"), items = $("items"), tip = $("tip"),
+      band = $("band"), tval = $("tval"), slider = $("slider"),
+      btnM = $("btnMorning"), btnD = $("btnDay");
+
+  function ruleFor(t){
+    for(var i=0;i<RULES.length;i++){
+      if(t >= RULES[i].min && t <= RULES[i].max) return RULES[i];
+    }
+    return RULES[RULES.length-1];
+  }
+
+  // 기준표 렌더
+  (function(){
+    var tb = document.querySelector("#reftable tbody");
+    RULES.forEach(function(r){
+      var tr = document.createElement("tr");
+      tr.setAttribute("data-label", r.label);
+      var td1 = document.createElement("td"); td1.textContent = r.label;
+      var td2 = document.createElement("td"); td2.textContent = r.items.join(", ");
+      tr.appendChild(td1); tr.appendChild(td2); tb.appendChild(tr);
+    });
+  })();
+
+  function render(t){
+    var r = ruleFor(t);
+    tval.textContent = t + "°C";
+    picked.textContent = r.label;
+    tip.textContent = r.tip;
+
+    items.textContent = "";
+    r.items.forEach(function(name){
+      var li = document.createElement("li");
+      li.textContent = name;
+      items.appendChild(li);
+    });
+
+    if(t === MORNING){ band.textContent = "아침 기준"; }
+    else if(t === DAY){ band.textContent = "낮 기준"; }
+    else { band.textContent = "선택한 기온 기준"; }
+
+    btnM.setAttribute("aria-pressed", String(t === MORNING));
+    btnD.setAttribute("aria-pressed", String(t === DAY));
+
+    var rows = document.querySelectorAll("#reftable tbody tr");
+    for(var i=0;i<rows.length;i++){
+      if(rows[i].getAttribute("data-label") === r.label) rows[i].className = "on";
+      else rows[i].className = "";
+    }
+  }
+
+  slider.addEventListener("input", function(){ render(parseInt(slider.value,10)); });
+  btnM.addEventListener("click", function(){ slider.value = MORNING; render(MORNING); });
+  btnD.addEventListener("click", function(){ slider.value = DAY; render(DAY); });
+
+  render(DAY);
+
+  // 시계 + 인사
+  var DAYS = ["일","월","화","수","목","금","토"];
+  function tick(){
+    var n = new Date();
+    var p = function(v){ return v < 10 ? "0"+v : ""+v; };
+    $("clock").textContent = p(n.getHours())+":"+p(n.getMinutes())+":"+p(n.getSeconds());
+    $("today").textContent = n.getFullYear()+"년 "+(n.getMonth()+1)+"월 "+n.getDate()+"일 "+DAYS[n.getDay()]+"요일";
+    var h = n.getHours(), g;
+    if(h < 5) g = "늦은 밤이네요";
+    else if(h < 11) g = "좋은 아침입니다";
+    else if(h < 17) g = "좋은 오후예요";
+    else if(h < 22) g = "편안한 저녁 되세요";
+    else g = "오늘도 수고하셨어요";
+    $("greet").textContent = g;
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+</script>
+</body>
+</html>
